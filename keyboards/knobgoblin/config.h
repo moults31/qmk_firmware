@@ -43,6 +43,10 @@
 
 #define DEBOUNCE 2
 
+/* disable these deprecated features by default */
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+
 /*Bootmagic position definition because (0,0) is not used*/
 #define BOOTMAGIC_LITE_ROW 0
 #define BOOTMAGIC_LITE_COLUMN 1
