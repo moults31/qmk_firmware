@@ -22,6 +22,7 @@
 #include "gdb.h"
 
 bool moults31_tap_custom_code(uint16_t keycode);
+bool moults31_caps_engine(void);
 
 enum custom_keycodes {
     // VSCode keycodes

@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "moults31.h"
+#include "rgblight.h"
 
 bool moults31_tap_custom_code(uint16_t keycode) {
     keyrecord_t record = {
@@ -27,6 +28,13 @@ bool moults31_tap_custom_code(uint16_t keycode) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool rv = true;
     switch (keycode) {
+
+        case KC_CAPS:
+            if (record->event.pressed) {
+                rv = moults31_caps_engine();
+            }
+            break;
+
         case M_MST_CODEBLOCK:
             if (record->event.pressed) {
                 SEND_STRING("```");
@@ -112,3 +120,21 @@ __attribute__((weak)) bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
+
+bool moults31_caps_engine(void)
+{
+    static bool caps_en = false;                      // Holds the previous caps lock state
+    static uint8_t mode = RGBLIGHT_MODE_STATIC_LIGHT; // Holds the mode that we should restore when caps disabled
+
+    if(caps_en){
+        rgblight_mode(mode);
+    }
+    else{
+        mode = rgblight_get_mode();
+        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+    }
+
+    caps_en = !caps_en;
+
+    return true;
+}
